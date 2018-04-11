@@ -9,23 +9,23 @@ app.listen(port, function(){
 });
 
 
-//transformar a variavel io em global
+//MAKES  IO A GLOBAL VAR
 app.set('io', io);
 			
 io.set("transports", ["xhr-polling"]); 
 io.set("polling duration", 10); 
 
 
-// criar a conexao do websocket
+// CREATES A WEBSOCKET CONNECTION
 io.on('connection', (socket) => {
-	console.log('usuario conectou');
+	console.log('user is connected');
 
 	socket.on('disconnect', () => {
-		console.log('usuario desconectou');
+		console.log('user is desconnected');
 	});
 
 	socket.on('msgParaServidor', (data) => {
-		//Dialogo
+		//MESSAGES
 		socket.emit(
 			'msgParaCliente', 
 			{apelido: data.apelido, mensagem: data.mensagem}
@@ -36,7 +36,7 @@ io.on('connection', (socket) => {
 			{apelido: data.apelido, mensagem: data.mensagem}
 		);
 
-		//participantes
+		//USERS
 		if(parseInt(data.apelido_atualizado_nos_clientes) == 0) {
 			socket.emit(
 				'participantesParaCliente', 
